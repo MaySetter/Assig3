@@ -5,8 +5,8 @@ package assig3_2;
  */
 public class GamePlay {
 
-    private boolean _available_c; // is coin available
-    private int  _counter_r; // The amount of coin flips made in the game
+    private boolean   coin_avaliable_; // is coin available
+    private int  rounds_counter_    ; // The amount of coin flips made in the game
 
     /**
      * Enables or disables the coin according to the val value
