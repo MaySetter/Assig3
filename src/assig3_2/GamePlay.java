@@ -53,6 +53,7 @@ public class GamePlay {
             int result = new Random().nextInt(2);
             coin_available_ = true;
             notifyAll();
+            System.out.println("Score is "+result) ;
             return result;
         }
     }
