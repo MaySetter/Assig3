@@ -1,7 +1,6 @@
 package assig3_2;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-
         GamePlay game = new GamePlay(); // creates new game
         Gamer player1 = new Gamer(game);
         Gamer player2 = new Gamer(game); // creates two player.
