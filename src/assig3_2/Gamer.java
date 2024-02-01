@@ -22,7 +22,23 @@ public class Gamer extends Thread{
      * Tries flipping a coin, and if succeeds, advances goodFlipsCounter by -1,
      * and go to sleep for one second.
      */
-    public void play(){}
+    public void play(){
+         while (gamePlay.getNumOfRounds() <= 10) {
+            // Try flipping a coin
+            int flipResult = gamePlay.flipCoin();
+
+            // If the flip succeeds, increment the goodFlipsCounter
+            this.goodFlipsCounter=this.goodFlipsCounter+flipResult;
+
+            try {
+                // Sleep for one second
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // Handle interrupted exception if needed
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * Getter
