@@ -25,6 +25,9 @@ public class GamePlay {
      */
     public void makeCoinAvail(boolean val) {
         this.coin_available_ = val;
+        if(this.coin_available_)
+        	notifyAll();
+        
     }
     /**
      * If the coin isn't available, thread will wait until it becomes available,
@@ -44,12 +47,10 @@ public class GamePlay {
                     e.printStackTrace();
                 }
             }
-          
             System.out.println(Thread.currentThread().getName() + " is flipping the coin.");
             coin_available_ = false;
-            int result = new Random().nextInt(2);
             rounds_counter_++;
-
+            int result = new Random().nextInt(2);
             coin_available_ = true;
             notifyAll();
 
