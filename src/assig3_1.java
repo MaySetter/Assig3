@@ -1,4 +1,5 @@
-package HW3;
+//@author Nir Hazan 316009489 , May Seter 312123037
+package assig3_1;
 
 public class assig3_1 {
 	static Object lock=new Object();
