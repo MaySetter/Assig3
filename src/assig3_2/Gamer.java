@@ -20,7 +20,7 @@ public class Gamer extends Thread {
      */
     @SuppressWarnings("static-access")
 	public void play() {
-        while (!Thread.interrupted() && gamePlay.getNumOfRounds() <= 10) {
+        while (!Thread.interrupted() && gamePlay.getNumOfRounds() < 10) {
             this.goodFlipsCounter=this.goodFlipsCounter+gamePlay.flipCoin(); // flipcoin() return 1 if succeed and 0 if not succeed.
             try {
                Thread.currentThread().sleep(1000); // Sleep for one second
