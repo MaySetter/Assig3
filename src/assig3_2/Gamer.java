@@ -1,3 +1,4 @@
+//@author Nir Hazan 316009489 , May Seter 312123037
 package assig3_2;
 public class Gamer extends Thread {
     private int goodFlipsCounter; // Counts the number of successful flips that the player made
