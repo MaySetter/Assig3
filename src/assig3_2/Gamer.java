@@ -1,10 +1,7 @@
 package assig3_2;
-
 public class Gamer extends Thread {
-
     private int goodFlipsCounter; // Counts the number of successful flips that the player made
     private GamePlay gamePlay;
-
     /**
      * Constructor initializes gamePlay variable.
      *
@@ -14,7 +11,6 @@ public class Gamer extends Thread {
         gamePlay = gp;
         this.goodFlipsCounter=0;
     }
-
     /**
      * Method runs a while loop. In every iteration, as long as no INTERRUPT and the number of coin flips in the whole game is less or equal to 10:
      * Tries flipping a coin, and if succeeds, advances goodFlipsCounter by 1,
@@ -36,7 +32,6 @@ public class Gamer extends Thread {
             }
         }
     }
-
     /**
      * Getter
      *
