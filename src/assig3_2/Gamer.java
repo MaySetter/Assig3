@@ -23,7 +23,7 @@ public class Gamer extends Thread{
      * and go to sleep for one second.
      */
     public void play(){
-         while (gamePlay.getNumOfRounds() <= 10) {
+         while (!Thread.interrupted() && gamePlay.getNumOfRounds() <= 10) {
             // Try flipping a coin
             int flipResult = gamePlay.flipCoin();
 
