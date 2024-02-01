@@ -1,3 +1,4 @@
+//@author Nir Hazan 316009489 , May Seter 312123037
 package assig3_2;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
