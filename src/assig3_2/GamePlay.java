@@ -44,8 +44,9 @@ public class GamePlay {
                     e.printStackTrace();
                 }
             }
-            coin_available_ = false;
+          
             System.out.println(Thread.currentThread().getName() + " is flipping the coin.");
+            coin_available_ = false;
             int result = new Random().nextInt(2);
             rounds_counter_++;
 
