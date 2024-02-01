@@ -19,19 +19,19 @@ public class Judge extends Thread {
     	
         try {
             while (!Thread.interrupted() && gamePlay.getNumOfRounds() <= 10) {
-            
+            	synchronized(this.gamePlay) {
                // Make the coin unavailable for a second
-                if(this.gamePlay.getCoinStatus()) {
-                	synchronized(this.gamePlay) {
-                	this.gamePlay.makeCoinAvail(false);
-                	Thread.currentThread().sleep(1000);
+                if(!this.gamePlay.getCoinStatus()) {
+                	
+                	this.gamePlay.makeCoinAvail(true);
+                	System.out.println("Coin available for half second");
+                	Judge.currentThread().sleep(500);
                 	}
-                }
               // Make the coin available for half a second
                 else {
-                	synchronized(this.gamePlay) {
-                		this.gamePlay.makeCoinAvail(true);
-                		Thread.currentThread().sleep(500);
+                		this.gamePlay.makeCoinAvail(false);
+                		System.out.println("Coin unavailable for one second");
+                		Judge.currentThread().sleep(1000);
                 	}
             	}
             }
