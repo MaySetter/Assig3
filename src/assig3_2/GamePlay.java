@@ -5,28 +5,28 @@ import java.util.Random;
  * The GamePlay class represents the game itself, the coin and the number of coin flips.
  */
 public class GamePlay {
-
+	private Judge judge;
     private boolean coin_available_; // is coin available
     private int rounds_counter_; // The amount of coin flips made in the game
-/**
+/** 
  * Constructor for GamePlay set coin to true and number of rounds to 0;
  */
     public GamePlay() {
     	this.coin_available_=true;
         this.rounds_counter_ =0;
+        judge=new Judge(this);
     }
 
     /**
      * Enables or disables the coin according to the val value
      * If the coin becomes available, the other threads who are waiting for the coin
      * are informed about it.
-     * Updates the _available_coin field according to the value it received.
-     * @param val int
+     * Updates the coin_available_ field according to the value it received.
+     * @param val boolean
      */
     public void makeCoinAvail(boolean val) {
         this.coin_available_ = val;
-        if(this.coin_available_)
-        	notifyAll();
+      	notifyAll();
         
     }
     /**
@@ -53,7 +53,6 @@ public class GamePlay {
             int result = new Random().nextInt(2);
             coin_available_ = true;
             notifyAll();
-
             return result;
         }
     }
@@ -65,4 +64,18 @@ public class GamePlay {
     public int getNumOfRounds() {
         return rounds_counter_;
     }
+    /**
+     * Getter.
+     * @return true of coin available .
+     */
+	public boolean getCoinStatus() {
+		return this.coin_available_;
+	}
+	 /**
+     * Getter.
+     * @return judge to start. .
+     */
+	public Judge getJudge() {
+		return this.judge;
+	}
 }
