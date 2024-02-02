@@ -1,10 +1,9 @@
-//@author Nir Hazan 316009489 , May Seter 312123037
+// Nir Hazan 316009489 , May Seter 312123037
 package assig3_2;
-//import java.util.concurrent.Semaphore;
-
 import java.util.Random;
 /**
  * The GamePlay class represents the game itself, the coin and the number of coin flips.
+ * @author Nir Hazan 316009489 , May Seter 312123037
  */
 public class GamePlay {
 	private Judge judge;
@@ -13,10 +12,10 @@ public class GamePlay {
 /** 
  * Constructor for GamePlay set coin to true and number of rounds to 0;
  */
-    public GamePlay() throws InterruptedException {
-    	this.coin_available_ = true;
-        this.rounds_counter_ = 0;
-        judge = new Judge(this);
+    public GamePlay() {
+    	this.coin_available_=true;
+        this.rounds_counter_ =0;
+        judge=new Judge(this);
     }
 
     /**
@@ -26,10 +25,9 @@ public class GamePlay {
      * Updates the coin_available_ field according to the value it received.
      * @param val boolean
      */
-    public void makeCoinAvail(boolean val) {
+    public synchronized void makeCoinAvail(boolean val) {
         this.coin_available_ = val;
-      	notifyAll();
-        
+        notifyAll();
     }
     /**
      * If the coin isn't available, thread will wait until it becomes available,
@@ -40,23 +38,22 @@ public class GamePlay {
      * @return result of the throw (0 = false/failure, 1 = true/success)
      */
     public synchronized int flipCoin() {
-        if (!coin_available_) {
+    	while (!coin_available_) {
             try {
                 System.out.println(Thread.currentThread().getName() + " is waiting for the coin.");
-                this.wait();
-            }catch (InterruptedException e){
+                wait();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        System.out.println(Thread.currentThread().getName() + " is flipping the coin.");
-        coin_available_ = false;
-        rounds_counter_++;
-        int result = new Random().nextInt(2);
-        coin_available_ = true;
-        notifyAll();
-        return result;
-    }
-
+            System.out.println(Thread.currentThread().getName() + " is flipping the coin.");
+            coin_available_ = false;
+            rounds_counter_++;
+            int result = new Random().nextInt(2);
+            coin_available_ = true;
+            System.out.println("Score is "+result) ;
+            return result;
+        }
     /**
      * Getter.
      * @return number of coin flips in the game.
@@ -64,8 +61,13 @@ public class GamePlay {
     public int getNumOfRounds() {
         return rounds_counter_;
     }
-
-
+    /**
+     * Getter.
+     * @return true of coin available .
+     */
+	public boolean getCoinStatus() {
+		return this.coin_available_;
+	}
 	 /**
      * Getter.
      * @return judge to start. .
