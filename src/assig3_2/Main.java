@@ -1,16 +1,15 @@
 //Nir Hazan 316009489 , May Seter 312123037
 package assig3_2;
 /**
- * Main class to run the game.
+ * Main class runs the game.
  * @author Nir Hazan 316009489 , May Seter 312123037
- *
  */
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
         GamePlay game = new GamePlay(); // creates new game
-        Gamer player1 = new Gamer(game);
-        Gamer player2 = new Gamer(game); // creates two player.
+        Gamer player1 = new Gamer(game); // creates two player.
+        Gamer player2 = new Gamer(game);
         //start
         player1.start();
         player2.start();
@@ -18,6 +17,7 @@ public class Main {
         //join
         player1.join();
         player2.join();
+        game.getJudge().interrupt();
         game.getJudge().join();
         //print winner or tie.
         if (player1.getScore() > player2.getScore()) // end of the game check who wins or tie.

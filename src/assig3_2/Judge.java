@@ -6,9 +6,9 @@ package assig3_2;
  * @author Nir Hazan 316009489 , May Seter 312123037
  */
 public class Judge extends Thread {
-	private GamePlay gamePlay;
+	private final GamePlay gamePlay;
     public Judge(GamePlay game) {
-		this.gamePlay=game;
+		this.gamePlay = game;
 	}
 
 	/**
@@ -16,35 +16,25 @@ public class Judge extends Thread {
      * unavailable for a second and then makes the coin available for half a second.
      */
 	@SuppressWarnings("static-access")
-	public void judge() {
-    	 while (!Thread.interrupted() && gamePlay.getNumOfRounds() <= 10) {
-    		 try {
-               // Make the coin unavailable for a second than judge sleep
-                if(!this.gamePlay.getCoinStatus()) {
-                	
-                	this.gamePlay.makeCoinAvail(true);
-                	System.out.println("Coin available for half second");
-					Thread.currentThread().sleep(500);;
-                
-                	}
-              // Make the coin available for half a second then judge sleep
-                else {
-                		this.gamePlay.makeCoinAvail(false);
-                		System.out.println("Coin unavailable for one second");
-                		Thread.currentThread().sleep(1000);
-                		
-                	}
-            	}catch (InterruptedException e) {
-            // Handle interrupted exception if needed
-        	System.out.println(e.getMessage());
-        }
-    	 }
+	public synchronized void judge() {
+		while (!Thread.currentThread().isInterrupted()) {
+			try {
+				//System.out.println("Coin available for half second");
+				this.gamePlay.makeCoinAvail(true);
+				Thread.currentThread().sleep(500);
+				//System.out.println("Coin unavailable for one second");
+				this.gamePlay.makeCoinAvail(false);
+				Thread.currentThread().sleep(1000);
+			}catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
     }
+
 	/**
-	 * run method  that start judge 
-	 * must implement to use Judge as a thread.
+	 * run method. must implement to use Judge as a thread.
 	 */
 	public void run() {
-       this.judge();
-    }
+		this.judge();
+	}
 }
