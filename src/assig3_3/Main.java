@@ -15,12 +15,20 @@ public class Main {
 		CucumbersThread cucumbersThread=new CucumbersThread (slicerMachine);
 		TomatoesThread tomatoesThread=new TomatoesThread(slicerMachine);
 		SlicerThread slicerThread=new SlicerThread(slicerMachine);
+
 		cucumbersThread.start();
 		tomatoesThread.start();
 		slicerThread.start();
+
 		cucumbersThread.join();
 		tomatoesThread.join();
 		slicerThread.join();
+
+
+//		slicerThread.interrupt();
+//		tomatoesThread.interrupt();
+//		cucumbersThread.interrupt();
+
 		System.out.println("Done");
 		scan.close();
 	}

@@ -6,22 +6,34 @@ package assig3_3;
  */
 public class TomatoesThread extends Thread {
 	private SlicerMachine slicerMachine;
+
 	public TomatoesThread(SlicerMachine sm) {
 		this.slicerMachine=sm;
 	}
+
 	public void run() {
-		synchronized(this.slicerMachine){
-		while(this.slicerMachine.getNumOfPreparedSalads()<this.slicerMachine.getNumOfSaladsToPrepare()) {
-			while(this.slicerMachine.getNumOfTomatoes()==this.slicerMachine.tomatoesNeededForOneSalad) {
-			try {
-				System.out.println("Tomatoes cell is full.");
-				this.slicerMachine.wait();
-			}catch(Exception e){
-				System.out.println(e.getMessage());
-			}	
+
+		int numTomatoesNeeded = slicerMachine.getTomatoesNeededForOneSalad();
+
+		while(true) {
+			synchronized (slicerMachine) {
+				while (this.slicerMachine.getNumOfTomatoes() == numTomatoesNeeded) {
+					try {
+						System.out.println("Tomatoes cell is full.");
+						this.wait();
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+				}
+				try{
+					this.slicerMachine.addOneTomato();
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+				if (slicerMachine.getNumOfSaladsToPrepare() == slicerMachine.getNumOfPreparedSalads()) break;
+//				if(slicerMachine.getNumOfTomatoes() == numTomatoesNeeded)
+//				notifyAll();
+			}
 		}
-		this.slicerMachine.addOneTomato();
 	}
-	}
-}
 }

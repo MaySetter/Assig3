@@ -7,22 +7,25 @@ package assig3_3;
 public class SlicerThread extends Thread {
 	private SlicerMachine slicerMachine;
 	public SlicerThread(SlicerMachine sm) {
+
 		this.slicerMachine=sm;
 	}
+
 	public void run() {
-		synchronized(this.slicerMachine) {
-			while(this.slicerMachine.getNumOfPreparedSalads()<this.slicerMachine.getNumOfSaladsToPrepare()) {
-		while(this.slicerMachine.getNumOfCucumbers()!=this.slicerMachine.cucumbersNeededForOneSalad||this.slicerMachine.getNumOfTomatoes()!=this.slicerMachine.tomatoesNeededForOneSalad) {
-			try {
-				System.out.println("Cant make salad yet  cells are not full.");
-				this.slicerMachine.wait();
-			}catch(Exception e){
-				System.out.println(e.getMessage());
+		while(this.slicerMachine.getNumOfPreparedSalads() < this.slicerMachine.getNumOfSaladsToPrepare()) {
+			synchronized(this.slicerMachine) {
+				while (this.slicerMachine.getNumOfCucumbers() != this.slicerMachine.getCucumbersNeededForOneSalad()
+						|| this.slicerMachine.getNumOfTomatoes() != this.slicerMachine.getTomatoesNeededForOneSalad()) {
+					try {
+						System.out.println("Cant make salad yet, cells are not full.");
+						this.slicerMachine.wait();
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+				}
+				this.slicerMachine.sliceVegetables();
 			}
-		}
-		this.slicerMachine.sliceVegetables();
-			
-		}
+			//Thread.currentThread().interrupt();
 		}	
 	}
 }

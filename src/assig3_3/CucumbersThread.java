@@ -9,19 +9,30 @@ public class CucumbersThread extends Thread {
 	public CucumbersThread(SlicerMachine sm) {
 		this.slicerMachine=sm;
 	}
+
 	public void run() {
-		synchronized(this.slicerMachine){
-		while(this.slicerMachine.getNumOfPreparedSalads()<this.slicerMachine.getNumOfSaladsToPrepare()) {
-			while(this.slicerMachine.getNumOfCucumbers()==this.slicerMachine.cucumbersNeededForOneSalad) {
-			try {
-				System.out.println("Cucumbers cell is full.");
-				this.slicerMachine.wait();
-			}catch(Exception e){
-				System.out.println(e.getMessage());
-			}	
+
+		int numCucumbersNeeded = slicerMachine.getCucumbersNeededForOneSalad();
+
+		while(true) {
+			synchronized (slicerMachine) {
+				while (this.slicerMachine.getNumOfCucumbers() == numCucumbersNeeded) {
+					try {
+						System.out.println("Cucumbers cell is full.");
+						this.wait();
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+				}
+				try{
+					this.slicerMachine.addOneCucumber();
+				} catch (Exception e){
+					e.printStackTrace();
+				}
+				if (slicerMachine.getNumOfSaladsToPrepare() == slicerMachine.getNumOfPreparedSalads()) break;
+//				if(slicerMachine.getNumOfCucumbers() == numCucumbersNeeded)
+//					notifyAll();
+			}
 		}
-		this.slicerMachine.addOneCucumber();
 	}
-	}
-}
 }

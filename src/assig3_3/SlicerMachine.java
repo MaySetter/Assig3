@@ -1,55 +1,50 @@
 //@author Nir Hazan 316009489 , May Seter 312123037
 package assig3_3;
 
-import java.util.Scanner;
-
 /**
  * SlicerMachine class represents the functions of the machine.
  */
 public class SlicerMachine {
-	Scanner scan=new Scanner(System.in);
-	int numOfCucumbers ;
-	int numOfTomatoes;
-	int numOfPreparedSalads ;
-	int numOfSaladToPrepare;
-	final int cucumbersNeededForOneSalad = 3;
-	final int tomatoesNeededForOneSalad = 2;
+	private int numOfCucumbers = 0;
+	private int numOfTomatoes = 0;
+	private int numOfPreparedSalads = 0;
+	private final int cucumbersNeededForOneSalad = 3;
+	private final int tomatoesNeededForOneSalad = 2;
+	private final int numOfSaladToPrepare;
+
 	public SlicerMachine(int num) {
-	 numOfCucumbers = 0;
-	 numOfTomatoes = 0;
-	 numOfPreparedSalads = 0;
-	 this.numOfSaladToPrepare=num;
-		
+		this.numOfSaladToPrepare = num;
 	}
+
 	// add one cucumber into the slicer chamber
-	public synchronized void addOneCucumber() {
-		if (numOfCucumbers < cucumbersNeededForOneSalad) {
-			System.out.println("adding one cucumber to the machine");
-			numOfCucumbers++;
-			if(numOfCucumbers==this.cucumbersNeededForOneSalad)
-				notifyAll();
+	public synchronized void addOneCucumber() throws InterruptedException {
+		while (numOfCucumbers >= cucumbersNeededForOneSalad) {
+			wait();
 		}
+		System.out.println("adding one cucumber to the machine");
+		numOfCucumbers++;
+		notifyAll();
 	}
 
 	// add one tomato into the slicer chamber
-	public synchronized void addOneTomato() {
-		if (numOfTomatoes < tomatoesNeededForOneSalad) {
-			System.out.println("adding one tomato to the machine");
-			numOfTomatoes++;
-			if(numOfTomatoes==this.tomatoesNeededForOneSalad)
-				notifyAll();
+	public synchronized void addOneTomato() throws InterruptedException {
+		while (numOfTomatoes >= tomatoesNeededForOneSalad) {
+			wait();
 		}
+		System.out.println("adding one tomato to the machine");
+		numOfTomatoes++;
+		notifyAll();
 	}
 	
 	// if there are enough vegetables in the slicer
 	// chamber, make another salad
 	public synchronized void sliceVegetables() {
-		if ((numOfCucumbers >= cucumbersNeededForOneSalad) && (numOfTomatoes >= tomatoesNeededForOneSalad)) {
+		if ((numOfCucumbers == cucumbersNeededForOneSalad) && (numOfTomatoes == tomatoesNeededForOneSalad)) {
 			makeNewSalad();
 		}
 	}
 
-	private synchronized  void makeNewSalad() {
+	private synchronized void makeNewSalad() {
 		System.out.println("== preparing one more salad ==");
 		numOfPreparedSalads++; 
 		// update stock
@@ -58,31 +53,19 @@ public class SlicerMachine {
 		notifyAll();
 	}	
 	
-	int getNumOfPreparedSalads() {
+	public int getNumOfPreparedSalads() {
 		return numOfPreparedSalads;
 	}
-/**
- * Getter.
- * @return int - Number of cucumbers in machine
- */
-	public int getNumOfCucumbers() {
-		return this.numOfCucumbers;
-	}
-	/**
-	 * Getter.
-	 * @return int - Number of tomatoes in machine
-	 */
-		public int getNumOfTomatoes() {
-			return this.numOfTomatoes;
-		}
-		/**
-		 * Getter.
-		 * @return int - number of salads need to be prepare 
-		 */
-	public int getNumOfSaladsToPrepare() {
-		
-		return this.numOfSaladToPrepare;
-	}
+
+	public int getNumOfCucumbers() {return this.numOfCucumbers;}
+
+	public int getNumOfTomatoes() { return this.numOfTomatoes; }
+
+	public int getNumOfSaladsToPrepare() { return this.numOfSaladToPrepare;}
+
+	public int getCucumbersNeededForOneSalad() { return this.cucumbersNeededForOneSalad;}
+
+	public int getTomatoesNeededForOneSalad() { return this.tomatoesNeededForOneSalad;}
 
 }
-}
+
