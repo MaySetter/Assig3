@@ -2,7 +2,11 @@
 package assig3_3;
 
 import java.util.Scanner;
-
+/**
+	 * Main program to start making salads.
+	 * number of salads that needs to be prepared - input from user.
+  	 * After riching number of salad use cancelletion to stop the threads.
+	 */
 public class Main {
 
 	public static void main(String[] args)  throws InterruptedException{
@@ -10,10 +14,10 @@ public class Main {
 		Scanner scan = new Scanner(System.in);
 		final int numOfSaladsToPrepare = scan.nextInt();
 		System.out.println("Preparing " + numOfSaladsToPrepare + " Salads...");
-		// YOUR CODE HERE: use threads to prepare N salads (as the user requested)
+		// OUR CODE HERE: use threads to prepare N salads (as the user requested)
 		SlicerMachine slicerMachine = new SlicerMachine(numOfSaladsToPrepare);
 		CucumbersThread cucumbersThread = new CucumbersThread (slicerMachine);
-		TomatoesThread tomatoesThread = new TomatoesThread(slicerMachine);
+		TomatoesThread tomatoesThread = new TomatoesThread(slicerMachine);       // initialize Threads.
 		SlicerThread slicerThread = new SlicerThread(slicerMachine);
 		// start
 		cucumbersThread.start();
@@ -21,7 +25,7 @@ public class Main {
 		slicerThread.start();
 		// interrupt
 		while(true) {
-			if(slicerThread.isInterrupted()) {
+			if(slicerThread.isInterrupted()) {  // (Cancelletion)
 				//System.out.println("Works");
 				cucumbersThread.interrupt();
 				tomatoesThread.interrupt();
