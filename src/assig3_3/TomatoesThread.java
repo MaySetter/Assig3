@@ -5,7 +5,7 @@ package assig3_3;
  * TomatoesThread class is responsible for feeding tomatoes to the slicing machine.
  */
 public class TomatoesThread extends Thread {
-	private final SlicerMachine slicerMachine; // Slicer machine only cuts no need to be changed-final.
+	private final SlicerMachine slicerMachine; // Slicer machine only represend the cells no need to be changed-final.
 	public TomatoesThread(SlicerMachine sm) {
 
 		this.slicerMachine = sm;
