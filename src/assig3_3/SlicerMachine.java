@@ -1,71 +1,103 @@
 //@author Nir Hazan 316009489 , May Seter 312123037
 package assig3_3;
 
+import java.util.Scanner;
+
 /**
  * SlicerMachine class represents the functions of the machine.
  */
 public class SlicerMachine {
-	private int numOfCucumbers = 0;
-	private int numOfTomatoes = 0;
-	private int numOfPreparedSalads = 0;
+	Scanner scan=new Scanner(System.in);
+	private int numOfCucumbers ;
+	private int numOfTomatoes;
+	private int numOfPreparedSalads ;
+	private final int numOfSaladToPrepare;
 	private final int cucumbersNeededForOneSalad = 3;
 	private final int tomatoesNeededForOneSalad = 2;
-	private final int numOfSaladToPrepare;
-
 	public SlicerMachine(int num) {
-		this.numOfSaladToPrepare = num;
-	}
+		numOfCucumbers = 0;
+		numOfTomatoes = 0;
+		numOfPreparedSalads = 0;
+		this.numOfSaladToPrepare=num;
 
+	}
 	// add one cucumber into the slicer chamber
-	public synchronized void addOneCucumber() throws InterruptedException {
-		while (numOfCucumbers >= cucumbersNeededForOneSalad) {
-			wait();
+	public synchronized void addOneCucumber() {
+		if (numOfCucumbers < cucumbersNeededForOneSalad) {
+			System.out.println("adding one cucumber to the machine");
+			numOfCucumbers++;
+			if(numOfCucumbers==this.cucumbersNeededForOneSalad)
+				notifyAll();
 		}
-		System.out.println("adding one cucumber to the machine");
-		numOfCucumbers++;
-		notifyAll();
 	}
 
 	// add one tomato into the slicer chamber
-	public synchronized void addOneTomato() throws InterruptedException {
-		while (numOfTomatoes >= tomatoesNeededForOneSalad) {
-			wait();
+	public synchronized void addOneTomato() {
+		if (numOfTomatoes < tomatoesNeededForOneSalad) {
+			System.out.println("adding one tomato to the machine");
+			numOfTomatoes++;
+			if(numOfTomatoes==this.tomatoesNeededForOneSalad)
+				notifyAll();
 		}
-		System.out.println("adding one tomato to the machine");
-		numOfTomatoes++;
-		notifyAll();
 	}
-	
+
 	// if there are enough vegetables in the slicer
 	// chamber, make another salad
-	public synchronized void sliceVegetables() {
-		if ((numOfCucumbers == cucumbersNeededForOneSalad) && (numOfTomatoes == tomatoesNeededForOneSalad)) {
+	public synchronized void sliceVegetables(){
+		if ((numOfCucumbers >= cucumbersNeededForOneSalad) && (numOfTomatoes >= tomatoesNeededForOneSalad)) {
 			makeNewSalad();
 		}
 	}
 
-	private synchronized void makeNewSalad() {
+	private synchronized  void makeNewSalad(){
 		System.out.println("== preparing one more salad ==");
-		numOfPreparedSalads++; 
+		numOfPreparedSalads++;
 		// update stock
 		numOfTomatoes = numOfTomatoes - tomatoesNeededForOneSalad;
 		numOfCucumbers = numOfCucumbers - cucumbersNeededForOneSalad;
 		notifyAll();
-	}	
-	
-	public int getNumOfPreparedSalads() {
+	}
+
+	/**
+	 * Getter
+	 * @return int - number of salad that have already been prepared.
+	 */
+	int getNumOfPreparedSalads() {
 		return numOfPreparedSalads;
 	}
 
-	public int getNumOfCucumbers() {return this.numOfCucumbers;}
+	/**
+	 * Getter.
+	 * @return int - Number of cucumbers currently in slicer machine
+	 */
+	public int getNumOfCucumbers() {
+		return this.numOfCucumbers;
+	}
 
-	public int getNumOfTomatoes() { return this.numOfTomatoes; }
+	/**
+	 * Getter.
+	 * @return int - Number of tomatoes currently in slicer machine
+	 */
+	public int getNumOfTomatoes() {
+		return this.numOfTomatoes;
+	}
 
-	public int getNumOfSaladsToPrepare() { return this.numOfSaladToPrepare;}
+	/**
+	 * Getter.
+	 * @return int - number of salads that needs to be prepared
+	 */
+	public int getNumOfSaladsToPrepare() { return this.numOfSaladToPrepare; }
 
-	public int getCucumbersNeededForOneSalad() { return this.cucumbersNeededForOneSalad;}
+	/**
+	 * Getter
+	 * @return int - number of cucumbers needed to prepare one salad
+	 */
+	public int getCucumbersNeededForOneSalad() {return cucumbersNeededForOneSalad; }
 
-	public int getTomatoesNeededForOneSalad() { return this.tomatoesNeededForOneSalad;}
+	/**
+	 * Getter
+	 * @return int - number of tomatoes needed to prepare one salad
+	 */
+	public int getTomatoesNeededForOneSalad() { return tomatoesNeededForOneSalad; }
 
 }
-
