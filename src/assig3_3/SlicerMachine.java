@@ -9,13 +9,13 @@ import java.util.Scanner;
 public class SlicerMachine {
 	Scanner scan=new Scanner(System.in);
 	private int numOfCucumbers ;
-	private int numOfTomatoes;
+	private int numOfTomatoes;                     // define variables 
 	private int numOfPreparedSalads ;
 	private final int numOfSaladToPrepare;
 	private final int cucumbersNeededForOneSalad = 3;
 	private final int tomatoesNeededForOneSalad = 2;
 	public SlicerMachine(int num) {
-		numOfCucumbers = 0;
+		numOfCucumbers = 0;             // At begining machine is empty.
 		numOfTomatoes = 0;
 		numOfPreparedSalads = 0;
 		this.numOfSaladToPrepare=num;
@@ -23,7 +23,7 @@ public class SlicerMachine {
 	}
 	// add one cucumber into the slicer chamber
 	public synchronized void addOneCucumber() {
-		if (numOfCucumbers < cucumbersNeededForOneSalad) {
+		if (numOfCucumbers < cucumbersNeededForOneSalad) {  //only if there is place in the cell.
 			System.out.println("adding one cucumber to the machine");
 			numOfCucumbers++;
 			if(numOfCucumbers==this.cucumbersNeededForOneSalad)
@@ -33,7 +33,7 @@ public class SlicerMachine {
 
 	// add one tomato into the slicer chamber
 	public synchronized void addOneTomato() {
-		if (numOfTomatoes < tomatoesNeededForOneSalad) {
+		if (numOfTomatoes < tomatoesNeededForOneSalad) {  //only if there is place in the cell.
 			System.out.println("adding one tomato to the machine");
 			numOfTomatoes++;
 			if(numOfTomatoes==this.tomatoesNeededForOneSalad)
@@ -48,7 +48,9 @@ public class SlicerMachine {
 			makeNewSalad();
 		}
 	}
-
+/**
+// After check if cells are full start to make salad and notify when finished.
+**/
 	private synchronized  void makeNewSalad(){
 		System.out.println("== preparing one more salad ==");
 		numOfPreparedSalads++;
