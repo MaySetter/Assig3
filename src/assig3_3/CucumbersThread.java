@@ -5,7 +5,7 @@ package assig3_3;
  * CucumbersThread class is responsible for feeding cucumbers to the slicing machine.
  */
 public class CucumbersThread extends Thread {
-	private final SlicerMachine slicerMachine;   // Slicer machine only cuts no need to be changed-final.
+	private final SlicerMachine slicerMachine;   // Slicer machine only represend the cells no need to be changed-final.
 	public CucumbersThread(SlicerMachine sm) {
 
 		this.slicerMachine = sm;
