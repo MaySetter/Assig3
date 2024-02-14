@@ -1,8 +1,7 @@
-//Nir Hazan 316009489 , May Seter 312123037
+// @author Nir Hazan 316009489 , May Seter 312123037
 package assig3_2;
 /**
  * Main class runs the game.
- * @author Nir Hazan 316009489 , May Seter 312123037
  */
 public class Main {
     public static void main(String[] args) throws InterruptedException {
@@ -14,11 +13,14 @@ public class Main {
         player1.start();
         player2.start();
         game.getJudge().start();  // start Threads .
+
         //join
         player1.join();
         player2.join();
-        game.getJudge().interrupt();
+
+        game.getJudge().interrupt(); // interrupt judge once the players finished game.
         game.getJudge().join();
+
         //print winner or tie.
         if (player1.getScore() > player2.getScore()) // end of the game check who wins or tie.
             System.out.println("player 1 wins");

@@ -5,21 +5,37 @@ package assig3_3;
  * CucumbersThread class is responsible for feeding cucumbers to the slicing machine.
  */
 public class CucumbersThread extends Thread {
-	private final SlicerMachine slicerMachine;   // Slicer machine only represend the cells no need to be changed-final.
+	private final SlicerMachine slicerMachine;
+
+	/**
+	 * Construction
+	 * @param sm - SlicerMachine object
+	 */
 	public CucumbersThread(SlicerMachine sm) {
 
 		this.slicerMachine = sm;
 	}
 
+	/**
+	 * Method run inherited from Thread class.
+	 * This Method runs a while loop that ends when an interruptedException is thrown.
+	 * In the while loop, if the slicerMachine's cucumber-chamber is full, thread waits.
+	 * Else, addOneCucumber method from slicerMachine is called.
+	 * Method uses slicerMachine as a lock.
+	 */
 	public void run(){
-		while (!isInterrupted()) {    
+		while (true) {
 			synchronized (this.slicerMachine) {
-				try {               // if cucumber cell is full go to wait.
+				try {
 					while (this.slicerMachine.getNumOfCucumbers() == slicerMachine.getCucumbersNeededForOneSalad()) {
 						this.slicerMachine.wait();
 					}
-					this.slicerMachine.addOneCucumber(); // if there is a place add one cucumber to the cell.
-				} catch (InterruptedException e) {}
+					this.slicerMachine.addOneCucumber();
+					sleep(500);
+				} catch (InterruptedException e) {
+					//System.out.println("cucumbers Interrupted");
+					break;
+				}
 			}
 		}
 	}

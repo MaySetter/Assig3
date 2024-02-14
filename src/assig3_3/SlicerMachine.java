@@ -14,43 +14,62 @@ public class SlicerMachine {
 	private final int numOfSaladToPrepare;
 	private final int cucumbersNeededForOneSalad = 3;
 	private final int tomatoesNeededForOneSalad = 2;
+
+	/**
+	 * Constructor. Initializes tomatoes and cucumbers and number of salads to be 0,
+	 * numOfSaladsToPrepare assigned the value of num
+	 * @param num - number of salads needed to be prepared.
+	 */
 	public SlicerMachine(int num) {
-		numOfCucumbers = 0;             // At begining machine is empty.
+		numOfCucumbers = 0;             // At first, machine is empty.
 		numOfTomatoes = 0;
 		numOfPreparedSalads = 0;
-		this.numOfSaladToPrepare=num;
+		this.numOfSaladToPrepare = num;
 
 	}
-	// add one cucumber into the slicer chamber
+
+	/**
+	 * Method checks if there is an available place in the machine for a cucumber.
+	 * If so, prints a message and increases the number of cucumbers in the machine by 1.
+	 * If machine is full, notify all.
+	 */
 	public synchronized void addOneCucumber() {
 		if (numOfCucumbers < cucumbersNeededForOneSalad) {  //only if there is place in the cell.
 			System.out.println("adding one cucumber to the machine");
 			numOfCucumbers++;
-			if(numOfCucumbers==this.cucumbersNeededForOneSalad)
+			if(numOfCucumbers == cucumbersNeededForOneSalad && numOfTomatoes == tomatoesNeededForOneSalad)
 				notifyAll();
 		}
 	}
 
-	// add one tomato into the slicer chamber
+	/**
+	 * Method checks if there is an available place in the machine for a cucumber.
+	 * If so, prints a message and increases the number of cucumbers in the machine by 1.
+	 * If machine is full, notify all.
+	 */
 	public synchronized void addOneTomato() {
 		if (numOfTomatoes < tomatoesNeededForOneSalad) {  //only if there is place in the cell.
 			System.out.println("adding one tomato to the machine");
 			numOfTomatoes++;
-			if(numOfTomatoes==this.tomatoesNeededForOneSalad)
+			if(numOfTomatoes == tomatoesNeededForOneSalad && numOfCucumbers == cucumbersNeededForOneSalad)
 				notifyAll();
 		}
 	}
 
-	// if there are enough vegetables in the slicer
-	// chamber, make another salad
+	/**
+	 * Method checks if machine is full. if so, calls the makeNewSalad() method.
+	 */
 	public synchronized void sliceVegetables(){
 		if ((numOfCucumbers >= cucumbersNeededForOneSalad) && (numOfTomatoes >= tomatoesNeededForOneSalad)) {
 			makeNewSalad();
 		}
 	}
-/**
-// After check if cells are full start to make salad and notify when finished.
-**/
+
+	/**
+	 * Method prints a message, increases the numbers of salads that has been prepared,
+	 * removes the number of tomatoes and cucumbers that has been used for the salad from the machine,
+	 * and notify all.
+	 */
 	private synchronized  void makeNewSalad(){
 		System.out.println("== preparing one more salad ==");
 		numOfPreparedSalads++;

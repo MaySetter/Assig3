@@ -1,9 +1,9 @@
-// Nir Hazan 316009489 , May Seter 312123037
+// @author Nir Hazan 316009489 , May Seter 312123037
 package assig3_2;
 import java.util.Random;
+
 /**
  * The GamePlay class represents the game itself, the coin and the number of coin flips.
- * @author Nir Hazan 316009489 , May Seter 312123037
  */
 public class GamePlay {
 	private final Judge judge;
@@ -15,7 +15,7 @@ public class GamePlay {
      */
     public GamePlay() {
     	this.coin_available_ = false;
-        this.rounds_counter_ = 1;
+        this.rounds_counter_ = 0;
         judge = new Judge(this);
     }
 

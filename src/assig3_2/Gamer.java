@@ -1,9 +1,8 @@
-//Nir Hazan 316009489 , May Seter 312123037
+// @author Nir Hazan 316009489 , May Seter 312123037
 package assig3_2;
 /**
  * This class represent Gamer (player in the game)
  * the player has counter of good flips and contain the game play.
- *	@author Nir Hazan 316009489 , May Seter 312123037
  */
 public class Gamer extends Thread {
     private int goodFlipsCounter; // Counts the number of successful flips that the player made
@@ -19,20 +18,17 @@ public class Gamer extends Thread {
  
     }
     /**
-     * Method runs a while loop. In every iteration, as long as no INTERRUPT and the number of coin flips in the whole
-     * game is less or equal to 10:
-     * Tries flipping a coin, and if succeeds, advances goodFlipsCounter by 1,
-     * and go to sleep for one second.
+     * Method runs a while loop. In every iteration, as long as no INTERRUPT and the number of coin flips in
+     * the whole game is less or equal to 10 (rounds counter starts from 0):
+     * Tries flipping a coin, and if succeeds, advances goodFlipsCounter by 1, and go to sleep for one second.
      */
-    @SuppressWarnings("static-access")
 	public void play() {
-    	
-        while (!currentThread().interrupted() && gamePlay.getNumOfRounds() <= 10) {
-            this.goodFlipsCounter += gamePlay.flipCoin(); //flipCoin() return 1 if succeed and 0 if not succeed.
+        while (!this.isInterrupted() && gamePlay.getNumOfRounds() < 10) {
             try {
+               this.goodFlipsCounter += gamePlay.flipCoin(); //flipCoin() return 1 if succeed and 0 if not succeed.
                currentThread().sleep(1000);
             } catch (InterruptedException e) {
-               e.printStackTrace();
+               break;
             }
         }
     }

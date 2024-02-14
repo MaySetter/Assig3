@@ -3,9 +3,8 @@ package assig3_3;
 
 import java.util.Scanner;
 /**
-	 * Main program to start making salads.
+	 * Program for an automatic salad making machine.
 	 * number of salads that needs to be prepared - input from user.
-  	 * After riching number of salad use cancelletion to stop the threads.
 	 */
 public class Main {
 
@@ -25,8 +24,7 @@ public class Main {
 		slicerThread.start();
 		// interrupt
 		while(true) {
-			if(slicerThread.isInterrupted()) {  // (Cancelletion)
-				//System.out.println("Works");
+			if(slicerThread.isInterrupted()) {  // (Cancellation)
 				cucumbersThread.interrupt();
 				tomatoesThread.interrupt();
 				break;
